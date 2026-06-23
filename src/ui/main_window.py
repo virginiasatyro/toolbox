@@ -1,7 +1,9 @@
+from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QHBoxLayout, QLabel, QListWidget, QMainWindow, QStackedWidget, QVBoxLayout, QWidget
 from src.core.registry import ToolRegistry
 from src.ui.sidebar import SidebarWidget
 
+DEFAULT_FONT_POINT_SIZE = 12
 
 class MainWindow(QMainWindow):
     TOOL_AREA_LABEL = "Tool Area"
@@ -11,6 +13,7 @@ class MainWindow(QMainWindow):
     def __init__(self, registry: ToolRegistry, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.registry = registry
+        self._apply_default_font()
         self.setWindowTitle("Toolbox")
         self._sidebar = SidebarWidget(self.registry.get_categories())
         self._sidebar.category_selected.connect(self._handle_category_selection)
@@ -21,6 +24,11 @@ class MainWindow(QMainWindow):
         self._build_user_interface()
         if self._sidebar._list.count():
             self._sidebar.set_current_category(self._sidebar._list.item(0).text())
+
+    def _apply_default_font(self) -> None:
+        default_font = QFont()
+        default_font.setPointSize(DEFAULT_FONT_POINT_SIZE)
+        self.setFont(default_font)
 
     def _build_user_interface(self) -> None:
         self._create_category_pages()
