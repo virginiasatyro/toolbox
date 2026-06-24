@@ -1,0 +1,1 @@
+Image tools (resize, rotate, flip, png->ico) using Pillow.\n\nLogic is in `image_utils.py`. Widgets are available as Qt tools under `src.tools.image`.
