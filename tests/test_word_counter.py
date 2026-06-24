@@ -1,3 +1,5 @@
+import pytest
+
 from src.tools.text.word_counter import build_word_count_result
 
 
