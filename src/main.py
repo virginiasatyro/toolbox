@@ -5,6 +5,8 @@ from src.core.registry import ToolRegistry
 from src.tools.text.base64_tool import Base64Tool
 from src.tools.text.lorem_ipsum_tool import LoremIpsumTool
 from src.tools.text.word_counter_tool import WordCounterTool
+from src.tools.network.domain_ip_tool import DomainToIpTool
+from src.tools.network.dns_lookup_tool import DNSLookupTool
 from src.ui.main_window import MainWindow
 
 
@@ -13,6 +15,8 @@ def build_registry() -> ToolRegistry:
     registry.register(WordCounterTool())
     registry.register(LoremIpsumTool())
     registry.register(Base64Tool())
+    registry.register(DomainToIpTool())
+    registry.register(DNSLookupTool())
     return registry
 
 
