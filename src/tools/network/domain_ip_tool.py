@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QPushButton, QLineEdit, QPlainTextEdit, QVBoxLayout, QWidget, QLabel, QHBoxLayout
 
 from src.core.tool import Tool
-from src.tools.network.domain_ip_logic import resolve_domain_to_ip
+from src.tools.network.domain_ip_logic import lookup_site_ip_info
 
 
 class DomainToIpTool(Tool):
@@ -15,7 +15,7 @@ class DomainToIpTool(Tool):
         layout = QVBoxLayout(widget)
 
         input_layout = QHBoxLayout()
-        input_layout.addWidget(QLabel("Domain:", widget))
+        input_layout.addWidget(QLabel("Site URL:", widget))
         self._input = QLineEdit(widget)
         input_layout.addWidget(self._input)
         self._resolve_button = QPushButton(self.RESOLVE_LABEL, widget)
@@ -31,16 +31,13 @@ class DomainToIpTool(Tool):
         return widget
 
     def _do_resolve(self) -> None:
-        domain = self._input.text().strip()
-        if not domain:
-            self._output.setPlainText("Please enter a domain name")
+        site_url = self._input.text().strip()
+        if not site_url:
+            self._output.setPlainText("Please enter a site URL")
             return
 
         try:
-            addresses = resolve_domain_to_ip(domain)
-            if not addresses:
-                self._output.setPlainText("No addresses found")
-            else:
-                self._output.setPlainText("\n".join(addresses))
+            result = lookup_site_ip_info(site_url)
+            self._output.setPlainText(result.to_display_text())
         except Exception as exc:
             self._output.setPlainText(f"Error: {exc}")
